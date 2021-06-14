@@ -2,10 +2,16 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FaCartPlus } from "react-icons/fa";
 import "./Navbar.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutUser } from "../../Actions/userAction";
+
 const Navbar = () => {
   const cartState = useSelector((state) => state.cartReducer);
+  const userState = useSelector((state) => state.loginReducer);
+  const dispatch = useDispatch();
   const { cartItems } = cartState;
+  const { currentUser } = userState;
+  console.log(currentUser);
 
   return (
     <div className="mb-5">
@@ -26,17 +32,25 @@ const Navbar = () => {
               Laptops-Shop
             </Link>
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                <Link className="nav-link ">User</Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/register" className="nav-link ">
-                  Register
-                </Link>
-              </li>
+              {currentUser && (
+                <>
+                  <li className="nav-item">
+                    <Link className="nav-link ">{currentUser.name}</Link>
+                  </li>
+                </>
+              )}
+
               <li className="nav-item">
                 <Link to="/login" className="nav-link ">
                   Login
+                </Link>
+              </li>
+
+              <li className="nav-item">
+                <Link
+                  onClick={() => dispatch(logoutUser())}
+                  className="nav-link ">
+                  Log out
                 </Link>
               </li>
             </ul>

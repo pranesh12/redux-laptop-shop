@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { userRegister } from "../../Actions/userAction";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -68,6 +69,14 @@ const Register = () => {
         <button type="submit" className="btn btn-primary">
           Register
         </button>
+        <div>
+          <p>
+            Already have an account?{" "}
+            <Link to="/login">
+              <small>Go to Login</small>
+            </Link>
+          </p>
+        </div>
       </form>
     </div>
   );

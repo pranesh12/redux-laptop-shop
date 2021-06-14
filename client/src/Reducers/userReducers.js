@@ -18,3 +18,25 @@ export const registerReducer = (state = {}, action) => {
       return state;
   }
 };
+
+export const loginReducer = (state = {}, action) => {
+  switch (action.type) {
+    case "UESER_LOGIN_REQUEST":
+      return {
+        loading: true,
+      };
+    case "UESER_LOGIN_REQUEST_SUCCESS":
+      return {
+        loading: false,
+        success: true,
+        currentUser: action.payload,
+      };
+    case "UESER_LOGIN_REQUEST_FAILED":
+      return {
+        loading: true,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};

@@ -15,6 +15,25 @@ router.post("/register", async (req, res) => {
     res.status(414).json({ meassage: error });
   }
 });
-router.post("/login", async (req, res) => {});
+router.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const user = await User.find({ email, password });
+    console.log(user);
+    if (user.length > 0) {
+      const currentUser = {
+        name: user[0].name,
+        isAdmin: user[0].isAdmin,
+        email: user[0].email,
+        _id: user[0]._id,
+      };
+      res.send(currentUser);
+    } else {
+      res.send({ meassage: "Login Failed" });
+    }
+  } catch (error) {
+    res.send({ meassage: error });
+  }
+});
 
 module.exports = router;
